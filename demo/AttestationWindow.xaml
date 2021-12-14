@@ -1,0 +1,123 @@
+﻿<Window x:Class="demo.AttestationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AttestationWindow" Height="300" Width="600"
+        MinHeight="100"
+        MinWidth="600" MaxWidth="600">
+    <Window.Resources>
+
+        <Style TargetType="TextBlock">
+
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="1"/>
+
+        </Style>
+
+        <Style TargetType="TextBox">
+
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="1"/>
+
+        </Style>
+
+        <Style TargetType="Button">
+
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="#009fda"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Foreground" Value="#fff"/>
+
+        </Style>
+
+    </Window.Resources>
+
+    <StackPanel 
+        Orientation="Vertical">
+        
+        <Grid
+            Margin="15">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+
+                <RowDefinition/>
+
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Text="Студент"
+                Grid.Column="0"
+                Grid.Row="0"/>
+
+            <TextBlock
+                Text="1"
+                Grid.Column="1"
+                Grid.Row="0"/>
+
+            <TextBlock
+                Text="2"
+                Grid.Column="2"
+                Grid.Row="0"/>
+
+            <TextBlock
+                Text="3"
+                Grid.Column="3"
+                Grid.Row="0"/>
+
+            <TextBlock
+                Text="итог"
+                Grid.Column="4"
+                Grid.Row="0"/>
+
+            <TextBlock
+                Text="оценка"
+                Grid.Column="5"
+                Grid.Row="0"/>
+
+            <TextBlock
+                Text="изменить"
+                Grid.Column="6"
+                Grid.Row="0"/>
+
+        </Grid>
+
+        <Grid
+            Name="MarksList"
+            Margin="15 0 15 0">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+
+            </Grid.ColumnDefinitions>
+
+        </Grid>
+
+    </StackPanel>
+</Window>
+

@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Attestation">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_student" Type="Int32" Nullable="false" />
+    <Property Name="id_subject" Type="Int32" Nullable="false" />
+    <Property Name="first" Type="Int32" Nullable="false" />
+    <Property Name="second" Type="Int32" Nullable="false" />
+    <Property Name="final" Type="Int32" Nullable="false" />
+    <Property Name="sum" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="mark" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MarksType" Relationship="Self.FK_Attestation_MarksType" FromRole="Attestation" ToRole="MarksType" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Attestation_Student" FromRole="Attestation" ToRole="Student" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_Attestation_Subject" FromRole="Attestation" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="AttestationType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_Subject_AttestationType" FromRole="AttestationType" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="Int32" Nullable="false" />
+    <Property Name="year" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Student_Groups" FromRole="Groups" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="MarksType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Attestation" Relationship="Self.FK_Attestation_MarksType" FromRole="MarksType" ToRole="Attestation" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="id_user" />
+    </Key>
+    <Property Name="id_user" Type="Int32" Nullable="false" />
+    <Property Name="full_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="id_group" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Attestation" Relationship="Self.FK_Attestation_Student" FromRole="Student" ToRole="Attestation" />
+    <NavigationProperty Name="Groups" Relationship="Self.FK_Student_Groups" FromRole="Student" ToRole="Groups" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Student_Users1" FromRole="Student" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="attestation" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Attestation1" Relationship="Self.FK_Attestation_Subject" FromRole="Subject" ToRole="Attestation" />
+    <NavigationProperty Name="AttestationType" Relationship="Self.FK_Subject_AttestationType" FromRole="Subject" ToRole="AttestationType" />
+    <NavigationProperty Name="Teacher" Relationship="Self.Teacher_Subject" FromRole="Subject" ToRole="Teacher" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="id_user" />
+    </Key>
+    <Property Name="id_user" Type="Int32" Nullable="false" />
+    <Property Name="full_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Teacher_Users" FromRole="Teacher" ToRole="Users" />
+    <NavigationProperty Name="Subject" Relationship="Self.Teacher_Subject" FromRole="Teacher" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Student_Users1" FromRole="Users" ToRole="Student" />
+    <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher_Users" FromRole="Users" ToRole="Teacher" />
+  </EntityType>
+  <Association Name="FK_Attestation_MarksType">
+    <End Role="MarksType" Type="Self.MarksType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attestation" Type="Self.Attestation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarksType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Attestation">
+        <PropertyRef Name="mark" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attestation_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attestation" Type="Self.Attestation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="id_user" />
+      </Principal>
+      <Dependent Role="Attestation">
+        <PropertyRef Name="id_student" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attestation_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attestation" Type="Self.Attestation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Attestation">
+        <PropertyRef Name="id_subject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subject_AttestationType">
+    <End Role="AttestationType" Type="Self.AttestationType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AttestationType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Subject">
+        <PropertyRef Name="attestation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="id_group" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Users1">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Teacher_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Context" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Attestation" EntityType="Self.Attestation" />
+    <EntitySet Name="AttestationType" EntityType="Self.AttestationType" />
+    <EntitySet Name="Groups" EntityType="Self.Groups" />
+    <EntitySet Name="MarksType" EntityType="Self.MarksType" />
+    <EntitySet Name="Student" EntityType="Self.Student" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Teacher" EntityType="Self.Teacher" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Attestation_MarksType" Association="Self.FK_Attestation_MarksType">
+      <End Role="MarksType" EntitySet="MarksType" />
+      <End Role="Attestation" EntitySet="Attestation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attestation_Student" Association="Self.FK_Attestation_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Attestation" EntitySet="Attestation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attestation_Subject" Association="Self.FK_Attestation_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Attestation" EntitySet="Attestation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subject_AttestationType" Association="Self.FK_Subject_AttestationType">
+      <End Role="AttestationType" EntitySet="AttestationType" />
+      <End Role="Subject" EntitySet="Subject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Groups" Association="Self.FK_Student_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Users1" Association="Self.FK_Student_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_Users" Association="Self.FK_Teacher_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Teacher" EntitySet="Teacher" />
+    </AssociationSet>
+    <AssociationSet Name="Teacher_Subject" Association="Self.Teacher_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Teacher" EntitySet="Teacher" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
